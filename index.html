@@ -3,102 +3,155 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>M3U PLAYLIST - IPTV Player</title>
+  <title>M3U PLAYLIST - Live TV</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
   <style>
     * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+      margin: 0; padding: 0; box-sizing: border-box;
       font-family: 'Poppins', sans-serif;
     }
     body {
-      background-color: #000;
+      background: linear-gradient(to right, #000000, #1a1a1a);
       color: #fff;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 60px 20px;
-      min-height: 100vh;
+      padding: 40px 10px;
     }
     header {
-      position: absolute;
-      top: 20px;
-      left: 20px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 40px;
+    }
+    header img {
+      height: 50px;
+      border-radius: 12px;
+    }
+    header h1 {
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: #00ffc3;
+      text-shadow: 0 0 10px #00ffc3;
+    }
+    .player-box {
+      width: 95%;
+      max-width: 800px;
+      margin-bottom: 50px;
+    }
+    .player-box h2 {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
       display: flex;
       align-items: center;
       gap: 10px;
     }
-    header img {
-      height: 50px;
-      border-radius: 8px;
-    }
-    header h1 {
-      font-size: 1.5rem;
-      font-weight: 600;
-    }
-    .player-container {
-      width: 100%;
-      max-width: 800px;
-      margin-top: 20px;
-    }
-    .channel-block {
-      margin-bottom: 40px;
-      text-align: center;
-    }
-    .channel-logo {
-      height: 40px;
-      margin-bottom: 10px;
-      border-radius: 6px;
-    }
-    .channel-title {
-      font-size: 1.2rem;
-      font-weight: 600;
-      margin-bottom: 10px;
-    }
-    .file-type {
-      font-size: 0.9rem;
-      color: #ccc;
-      margin-bottom: 10px;
+    .player-box h2 img {
+      height: 24px;
     }
     video {
       width: 100%;
+      border-radius: 12px;
+      outline: 2px solid #00ffc3;
+      box-shadow: 0 0 15px #00ffc3;
+    }
+
+    /* Modal Styling */
+    .modal {
+      display: flex;
+      position: fixed;
+      z-index: 999;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0,0,0,0.7);
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-content {
+      background-color: #222;
+      padding: 20px 30px;
       border-radius: 10px;
+      text-align: center;
+      max-width: 90%;
+      box-shadow: 0 0 10px #00ffc3;
+    }
+    .modal-content h2 {
+      margin-bottom: 15px;
+      color: #00ffc3;
+    }
+    .modal-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 20px;
+    }
+    .modal-buttons button {
+      padding: 8px 20px;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .ok-btn {
+      background-color: #00ffc3;
+      color: #000;
+    }
+    .cancel-btn {
+      background-color: #444;
+      color: #fff;
     }
   </style>
-  <script>
-    window.onload = function () {
-      alert("Join Our Telegram Channel: M3U PLAYLIST");
-      window.location.href = "https://t.me/IPTVM3Y";
-    }
-  </script>
 </head>
 <body>
+
+  <!-- Modal -->
+  <div class="modal" id="popup">
+    <div class="modal-content">
+      <h2>Join Our Telegram Channel</h2>
+      <p>@IPTVM3Y for Latest M3U Playlists</p>
+      <div class="modal-buttons">
+        <button class="ok-btn" onclick="redirectToTelegram()">OK</button>
+        <button class="cancel-btn" onclick="closePopup()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
   <header>
-    <img src="https://images.app.goo.gl/YVsQ21KXfrVucwqSA" alt="Logo" />
+    <img src="https://i.ibb.co/JxGRx2y/m3ulogo.png" alt="M3U Logo">
     <h1>M3U PLAYLIST</h1>
   </header>
 
-  <div class="player-container">
-    <div class="channel-block">
-      <img class="channel-logo" src="https://images.app.goo.gl/YVsQ21KXfrVucwqSA" alt="Star Sports Hindi" />
-      <div class="channel-title">Star Sports 1 HD (Hindi)</div>
-      <div class="file-type">Format: .m3u8</div>
-      <video controls autoplay>
-        <source src="https://starsporthindii.pages.dev/720p.m3u8" type="application/x-mpegURL">
-        Your browser does not support the video tag.
-      </video>
-    </div>
-
-    <div class="channel-block">
-      <img class="channel-logo" src="https://images.app.goo.gl/YVsQ21KXfrVucwqSA" alt="Star Sports English" />
-      <div class="channel-title">Star Sports 1 (English)</div>
-      <div class="file-type">Format: .m3u8 (converted from .ts)</div>
-      <video controls>
-        <source src="https://crichd.onlinetvbd.com/stream.php?id=65&srv=1&format=.m3u8&vtoken=d2101252c7768ff7d3c5850178eda8f0f48f48283bfc97c0e67d358900a50ee3-1746042804" type="application/x-mpegURL">
-        Your browser does not support the video tag.
-      </video>
-    </div>
+  <div class="player-box">
+    <h2>
+      <img src="https://i.imgur.com/xjNzV9X.png" alt="Hindi Logo">
+      Star Sports 1 HD (Hindi)
+    </h2>
+    <video controls autoplay>
+      <source src="https://starsporthindii.pages.dev/720p.m3u8" type="application/x-mpegURL">
+      Your browser does not support the video tag.
+    </video>
   </div>
+
+  <div class="player-box">
+    <h2>
+      <img src="https://i.imgur.com/HbrVnYx.png" alt="English Logo">
+      Star Sports 1 (English)
+    </h2>
+    <video controls autoplay>
+      <source src="https://crichd.onlinetvbd.com/stream.php?id=65&srv=1&format=.m3u8&vtoken=d2101252c7768ff7d3c5850178eda8f0f48f48283bfc97c0e67d358900a50ee3-1746042804" type="application/x-mpegURL">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+
+  <script>
+    function redirectToTelegram() {
+      window.location.href = "http://t.me/IPTVM3Y";
+    }
+    function closePopup() {
+      document.getElementById("popup").style.display = "none";
+    }
+  </script>
 </body>
-</html>
+</html
