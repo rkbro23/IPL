@@ -27,6 +27,10 @@
     header img {
       height: 50px;
       border-radius: 12px;
+      transition: transform 0.3s ease;
+    }
+    header img:hover {
+      transform: scale(1.1);
     }
     header h1 {
       font-size: 1.6rem;
@@ -65,21 +69,26 @@
       top: 0; left: 0;
       width: 100vw;
       height: 100vh;
-      background-color: rgba(0,0,0,0.7);
+      background-color: rgba(0,0,0,0.8);
       align-items: center;
       justify-content: center;
     }
     .modal-content {
       background-color: #222;
       padding: 20px 30px;
-      border-radius: 10px;
+      border-radius: 12px;
       text-align: center;
       max-width: 90%;
       box-shadow: 0 0 10px #00ffc3;
+      animation: fadeIn 0.5s ease;
     }
     .modal-content h2 {
-      margin-bottom: 15px;
+      margin-bottom: 10px;
       color: #00ffc3;
+      font-size: 1.5rem;
+    }
+    .modal-content p {
+      font-size: 1rem;
     }
     .modal-buttons {
       display: flex;
@@ -99,9 +108,20 @@
       background-color: #00ffc3;
       color: #000;
     }
+    .ok-btn:hover {
+      background-color: #00e6b0;
+    }
     .cancel-btn {
       background-color: #444;
       color: #fff;
+    }
+    .cancel-btn:hover {
+      background-color: #666;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
     }
   </style>
 </head>
@@ -148,7 +168,7 @@
 
   <script>
     function redirectToTelegram() {
-      window.location.href = "http://t.me/IPTVM3Y";
+      window.location.href = "https://t.me/IPTVM3Y";
     }
     function closePopup() {
       document.getElementById("popup").style.display = "none";
