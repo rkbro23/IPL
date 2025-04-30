@@ -1,31 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live Streaming</title>
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>M3U PLAYLIST - IPTV Player</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    body {
+      background-color: #000;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 60px 20px;
+      min-height: 100vh;
+    }
+    header {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    header img {
+      height: 50px;
+      border-radius: 8px;
+    }
+    header h1 {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+    .player-container {
+      width: 100%;
+      max-width: 800px;
+      margin-top: 20px;
+    }
+    .channel-block {
+      margin-bottom: 40px;
+      text-align: center;
+    }
+    .channel-logo {
+      height: 40px;
+      margin-bottom: 10px;
+      border-radius: 6px;
+    }
+    .channel-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .file-type {
+      font-size: 0.9rem;
+      color: #ccc;
+      margin-bottom: 10px;
+    }
+    video {
+      width: 100%;
+      border-radius: 10px;
+    }
+  </style>
+  <script>
+    window.onload = function () {
+      alert("Join Our Telegram Channel: M3U PLAYLIST");
+      window.location.href = "https://t.me/IPTVM3Y";
+    }
+  </script>
 </head>
 <body>
-    <h1>Live Stream</h1>
-    <video id="video" width="100%" height="auto" controls></video>
+  <header>
+    <img src="https://images.app.goo.gl/YVsQ21KXfrVucwqSA" alt="Logo" />
+    <h1>M3U PLAYLIST</h1>
+  </header>
 
-    <script>
-        // Your M3U8 link
-        var videoSrc = 'https://absicka4aa3yaaayaaaaaaaaaaaaa.live-cf.cdn.hotstar.com/hls/live/2027118/inallow-ipl-2025/hin/1540040321/15mindvrm01adb422e44ebf4652a951baf54f953ecf30april2025/master_ap_1080_5.m3u8';
+  <div class="player-container">
+    <div class="channel-block">
+      <img class="channel-logo" src="https://images.app.goo.gl/YVsQ21KXfrVucwqSA" alt="Star Sports Hindi" />
+      <div class="channel-title">Star Sports 1 HD (Hindi)</div>
+      <div class="file-type">Format: .m3u8</div>
+      <video controls autoplay>
+        <source src="https://starsporthindii.pages.dev/720p.m3u8" type="application/x-mpegURL">
+        Your browser does not support the video tag.
+      </video>
+    </div>
 
-        // Check if HLS.js is supported
-        if (Hls.isSupported()) {
-            var hls = new Hls();
-            hls.loadSource(videoSrc);
-            hls.attachMedia(document.getElementById('video'));
-            hls.on(Hls.Events.MANIFEST_PARSED, function() {
-                console.log("Manifest loaded");
-            });
-        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-            // If browser supports HLS natively (like Safari)
-            video.src = videoSrc;
-        }
-    </script>
+    <div class="channel-block">
+      <img class="channel-logo" src="https://images.app.goo.gl/YVsQ21KXfrVucwqSA" alt="Star Sports English" />
+      <div class="channel-title">Star Sports 1 (English)</div>
+      <div class="file-type">Format: .m3u8 (converted from .ts)</div>
+      <video controls>
+        <source src="https://crichd.onlinetvbd.com/stream.php?id=65&srv=1&format=.m3u8&vtoken=d2101252c7768ff7d3c5850178eda8f0f48f48283bfc97c0e67d358900a50ee3-1746042804" type="application/x-mpegURL">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </div>
 </body>
 </html>
