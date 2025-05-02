@@ -2,180 +2,174 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Live Sports Player</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Live Sports Streaming</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
   <style>
     * { box-sizing: border-box; font-family: 'Poppins', sans-serif; }
     body {
       margin: 0;
-      background: #000;
-      color: #fff;
+      padding: 30px 10px;
+      background: linear-gradient(to right, #000, #1a1a1a);
+      color: white;
+      text-align: center;
     }
     header {
-      padding: 15px;
-      text-align: center;
-      background: #111;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    header img { height: 50px; border-radius: 12px; }
+    header h1 {
       color: #00ffc3;
-      font-size: 1.5rem;
+      font-size: 1.6rem;
       font-weight: 600;
+      text-shadow: 0 0 10px #00ffc3;
     }
     .video-container {
       position: relative;
-      width: 100%;
+      width: 95%;
       max-width: 800px;
       margin: auto;
     }
-    video, iframe {
+    iframe, video {
       width: 100%;
       height: 480px;
+      border-radius: 12px;
       border: 2px solid #00ffc3;
-      border-radius: 10px;
+      box-shadow: 0 0 15px #00ffc3;
     }
-    .controls {
+    .server-selector, .quality-selector, .record-btn {
       position: absolute;
-      width: 100%;
       top: 10px;
-      left: 0;
-      display: flex;
-      justify-content: space-between;
-      padding: 0 15px;
+      right: 10px;
     }
-    .record-btn, .server-btn {
+    .server-selector button, .quality-selector button, .record-btn button {
       background: #00ffc3;
+      color: #000;
+      font-weight: bold;
       border: none;
       padding: 6px 12px;
-      font-weight: bold;
       border-radius: 6px;
       cursor: pointer;
-      color: #000;
     }
-    .quality-btn {
-      position: absolute;
-      right: 15px;
-      bottom: 15px;
-      background: #00ffc3;
-      color: #000;
-      padding: 6px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    .quality-options {
+    .server-list, .quality-options {
       display: none;
       position: absolute;
-      bottom: 50px;
-      right: 15px;
+      right: 0;
       background: #111;
       border: 1px solid #00ffc3;
-      border-radius: 6px;
+      border-radius: 8px;
+      margin-top: 5px;
+      z-index: 99;
     }
-    .quality-options div {
+    .server-list div, .quality-options div {
       padding: 8px 15px;
       cursor: pointer;
       color: #00ffc3;
     }
-    .quality-options div:hover {
+    .server-list div:hover, .quality-options div:hover { 
       background: #00ffc3;
       color: #000;
     }
-    .popup {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.8);
+    .channel-bar {
       display: flex;
-      align-items: center;
       justify-content: center;
-      z-index: 1000;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 30px;
     }
-    .popup-content {
-      background: #111;
-      padding: 20px 30px;
-      border-radius: 10px;
-      text-align: center;
-      border: 2px solid #00ffc3;
-    }
-    .popup-content button {
-      margin-top: 15px;
-      padding: 8px 15px;
-      background: #00ffc3;
-      color: #000;
-      border: none;
-      border-radius: 6px;
+    .channel-bar div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       cursor: pointer;
+    }
+    .channel-bar img {
+      height: 40px;
+      border-radius: 6px;
+    }
+    .channel-bar span {
+      margin-top: 5px;
+      color: #00ffc3;
       font-weight: bold;
     }
   </style>
 </head>
 <body>
-  <div class="popup" id="popup">
-    <div class="popup-content">
-      <p>Join our Telegram channel for more content!</p>
-      <a href="http://t.me/IPTVM3Y" target="_blank"><button>Join Now</button></a>
-      <button onclick="document.getElementById('popup').style.display='none'">Cancel</button>
+  <header>
+    <img src="https://i.ibb.co/7dcBV56/IMG_20250430_210037_251.png" alt="Logo">
+    <h1>M3U PLAYLIST</h1>
+  </header>
+  
+  <div class="video-container">
+    <div class="server-selector">
+      <button onclick="toggleServers()">Servers</button>
+      <div class="server-list" id="serverList"></div>
+    </div>
+    <div class="quality-selector">
+      <button onclick="toggleQuality()">Quality</button>
+      <div class="quality-options" id="qualityOptions">
+        <div>1080p</div>
+        <div>720p</div>
+        <div>360p</div>
+      </div>
+    </div>
+    <div class="record-btn">
+      <button onclick="toggleRecord()">Start Recording</button>
+    </div>
+    <div id="playerBox">
+      <video controls autoplay id="mainPlayer">
+        <source src="https://amit-1.allinonereborn.in/jiotv11/app/ts_live_1984.m3u8" type="application/x-mpegURL">
+      </video>
     </div>
   </div>
 
-  <header>M3U Sports Player</header>
-  <div class="video-container">
-    <div class="controls">
-      <button class="record-btn" id="recordBtn" onclick="toggleRecord()">Record</button>
-      <button class="server-btn" onclick="toggleServer()">Server</button>
+  <div class="channel-bar">
+    <div onclick="loadChannel(0)">
+      <img src="https://i.ibb.co/Y4pFSrM/1200px-Star_Sports_1_HD.png" alt="Star Sports 1 HD">
+      <span>Star Sports 1 HD</span>
     </div>
-    <div id="playerBox">
-      <video id="mainPlayer" controls autoplay>
-        <source src="https://live.dtvxtream.com/lunar-ipl-hindi" type="application/x-mpegURL" />
-      </video>
+    <div onclick="loadChannel(1)">
+      <img src="https://upload.wikimedia.org/wikipedia/en/f/f4/Willow_Cricket_HD_Logo.png" alt="Willow ENG">
+      <span>Willow ENG</span>
     </div>
-    <div class="quality-btn" onclick="toggleQuality()">Quality</div>
-    <div class="quality-options" id="qualityOptions">
-      <div>1080p</div>
-      <div>720p</div>
-      <div>360p</div>
+    <div onclick="loadChannel(2)">
+      <img src="https://i.ibb.co/bgpRJFB/images.png" alt="MLB">
+      <span>MLB Baseball ENG</span>
     </div>
   </div>
 
   <script>
     const channels = [
-      {
-        name: "Star Sports 1 HD",
-        servers: [
-          "https://amit-1.allinonereborn.in/jiotv11/app/ts_live_1984.m3u8",
-          "https://amitb3669.github.io/allinonereborn/str_sports_hindi.html"
-        ]
-      },
-      {
-        name: "Willow HD",
-        servers: [
-          "https://allinonereborn.com/spicetv-web/player.html?url=https%3A%2F%2Fallinonereborn.com%2Ftest.m3u8%3Fid%3D65088&name=WILLOW%20HD",
-          "https://amitb3669.github.io/allinonereborn/t-sports.html"
-        ]
-      },
-      {
-        name: "MLB Baseball ENG",
-        servers: [
-          "https://allinonereborn.com/spicetv-web/player.html?url=https%3A%2F%2Fallinonereborn.com%2Ftest.m3u8%3Fid%3D44598&name=MLB%20NETWORK%20HD",
-          "no-url"
-        ]
-      }
+      ["https://amit-1.allinonereborn.in/jiotv11/app/ts_live_1984.m3u8", "https://amitb3669.github.io/allinonereborn/str_sports_hindi.html"],
+      ["https://allinonereborn.com/spicetv-web/player.html?url=https%3A%2F%2Fallinonereborn.com%2Ftest.m3u8%3Fid%3D65088&name=WILLOW%20HD", "https://amitb3669.github.io/allinonereborn/t-sports.html"],
+      ["https://allinonereborn.com/spicetv-web/player.html?url=https%3A%2F%2Fallinonereborn.com%2Ftest.m3u8%3Fid%3D44598&name=MLB%20NETWORK%20HD", "no-url"]
     ];
 
-    let currentChannelIndex = 0;
+    let currentChannel = 0;
     let currentServerIndex = 0;
+    let isRecording = false;
+    let mediaRecorder;
+    let recordedChunks = [];
 
-    function toggleServer() {
-      currentServerIndex = (currentServerIndex + 1) % channels[currentChannelIndex].servers.length;
-      const url = channels[currentChannelIndex].servers[currentServerIndex];
-      const playerBox = document.getElementById("playerBox");
+    function toggleServers() {
+      const list = document.getElementById("serverList");
+      list.style.display = list.style.display === "block" ? "none" : "block";
+      showServers(currentChannel);
+    }
 
-      if (url !== "no-url") {
-        if (url.includes("iframe") || url.includes("html") || url.includes("player")) {
-          playerBox.innerHTML = `<iframe src="${url}" allowfullscreen></iframe>`;
-        } else {
-          playerBox.innerHTML = `<video id="mainPlayer" controls autoplay><source src="${url}" type="application/x-mpegURL"></video>`;
-        }
-      }
+    function showServers(index) {
+      const list = document.getElementById("serverList");
+      list.innerHTML = "";
+      channels[index].forEach((url, i) => {
+        const div = document.createElement("div");
+        div.innerText = `Server ${i + 1}`;
+        div.onclick = () => loadStream(url);
+        list.appendChild(div);
+      });
     }
 
     function toggleQuality() {
@@ -183,44 +177,59 @@
       q.style.display = q.style.display === "block" ? "none" : "block";
     }
 
-    let mediaRecorder, recordedBlobs = [];
-    let isRecording = false;
+    function loadChannel(index) {
+      currentChannel = index;
+      showServers(index);
+      loadStream(channels[index][currentServerIndex]);
+    }
+
+    function loadStream(url) {
+      const playerBox = document.getElementById("playerBox");
+      const videoElement = document.createElement("video");
+      videoElement.controls = true;
+      videoElement.autoplay = true;
+      const source = document.createElement("source");
+      source.src = url;
+      source.type = "application/x-mpegURL";
+      videoElement.appendChild(source);
+      playerBox.innerHTML = "";
+      playerBox.appendChild(videoElement);
+      
+      if (mediaRecorder) {
+        mediaRecorder.stop();
+      }
+      startRecording(videoElement);
+    }
+
+    function startRecording(videoElement) {
+      const stream = videoElement.captureStream();
+      mediaRecorder = new MediaRecorder(stream);
+      mediaRecorder.ondataavailable = (event) => {
+        recordedChunks.push(event.data);
+      };
+      mediaRecorder.onstop = () => {
+        const blob = new Blob(recordedChunks, { type: 'video/mp4' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'recorded_video.mp4';
+        a.click();
+      };
+      mediaRecorder.start();
+    }
 
     function toggleRecord() {
-      const btn = document.getElementById("recordBtn");
-      const video = document.getElementById("mainPlayer");
-      if (!video || video.tagName !== 'VIDEO') {
-        alert("Recording works only with .m3u8/video streams.");
-        return;
-      }
-      if (!isRecording) {
-        navigator.mediaDevices.getDisplayMedia({ video: true, audio: true }).then(stream => {
-          recordedBlobs = [];
-          mediaRecorder = new MediaRecorder(stream);
-          mediaRecorder.ondataavailable = event => {
-            if (event.data && event.data.size > 0) recordedBlobs.push(event.data);
-          };
-          mediaRecorder.onstop = () => {
-            const blob = new Blob(recordedBlobs, { type: 'video/mp4' });
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.style.display = 'none';
-            a.href = url;
-            a.download = 'recording.mp4';
-            document.body.appendChild(a);
-            a.click();
-            window.URL.revokeObjectURL(url);
-          };
-          mediaRecorder.start();
-          btn.innerText = "Stop";
-          isRecording = true;
-        }).catch(err => alert("Permission denied or error: " + err));
-      } else {
+      if (isRecording) {
         mediaRecorder.stop();
-        btn.innerText = "Record";
+        document.querySelector('.record-btn button').textContent = "Start Recording";
         isRecording = false;
+      } else {
+        document.querySelector('.record-btn button').textContent = "Stop Recording";
+        isRecording = true;
       }
     }
+
+    loadChannel(0);
   </script>
 </body>
 </html>
