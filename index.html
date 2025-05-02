@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -10,16 +9,15 @@
     body {
       background: linear-gradient(to right, #000000, #1a1a1a);
       color: #fff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
       padding: 30px 10px;
+      text-align: center;
     }
     header {
       display: flex;
       align-items: center;
       gap: 15px;
-      margin-bottom: 30px;
+      justify-content: center;
+      margin-bottom: 20px;
     }
     header img {
       height: 50px;
@@ -31,31 +29,44 @@
       color: #00ffc3;
       text-shadow: 0 0 10px #00ffc3;
     }
-    .player-box {
+    .video-container {
       width: 95%;
       max-width: 800px;
-      margin-bottom: 40px;
+      margin: auto;
     }
-    .player-box h2 {
-      font-size: 1.2rem;
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .player-box h2 img {
-      height: 28px;
-      border-radius: 6px;
-    }
-    video, iframe {
+    iframe, video {
       width: 100%;
       height: 480px;
       border-radius: 12px;
       outline: 2px solid #00ffc3;
       box-shadow: 0 0 15px #00ffc3;
     }
-
-    /* Modal */
+    .channel-bar {
+      margin-top: 30px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .channel-bar div {
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: 0.2s;
+    }
+    .channel-bar img {
+      height: 40px;
+      border-radius: 6px;
+    }
+    .channel-bar span {
+      margin-top: 5px;
+      color: #00ffc3;
+      font-weight: bold;
+    }
+    .channel-bar div:hover {
+      transform: scale(1.1);
+    }
     .modal {
       display: flex;
       position: fixed;
@@ -74,12 +85,6 @@
       text-align: center;
       max-width: 90%;
       box-shadow: 0 0 10px #00ffc3;
-      animation: fadeIn 0.5s ease;
-    }
-    .modal-content h2 {
-      margin-bottom: 10px;
-      color: #00ffc3;
-      font-size: 1.5rem;
     }
     .modal-buttons {
       display: flex;
@@ -93,22 +98,12 @@
       border-radius: 5px;
       font-weight: bold;
       cursor: pointer;
-      transition: 0.2s;
     }
     .ok-btn { background-color: #00ffc3; color: #000; }
-    .ok-btn:hover { background-color: #00e6b0; }
     .cancel-btn { background-color: #444; color: #fff; }
-    .cancel-btn:hover { background-color: #666; }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.9); }
-      to { opacity: 1; transform: scale(1); }
-    }
   </style>
 </head>
-<body>
-
-  <!-- Modal -->
-  <div class="modal" id="popup">
+<body>  <div class="modal" id="popup">
     <div class="modal-content">
       <h2>Join Our Telegram Channel</h2>
       <p>@IPTVM3Y for Latest M3U Playlists</p>
@@ -117,58 +112,41 @@
         <button class="cancel-btn" onclick="closePopup()">Cancel</button>
       </div>
     </div>
-  </div>
-
-  <header>
-    <img src="https://i.ibb.co/7dcBV56/M3U-LOGO.jpg" alt="M3U Logo">
+  </div>  <header>
+    <img src="https://i.ibb.co/7dcBV56/M3U-LOGO.jpg" alt="Logo">
     <h1>M3U PLAYLIST</h1>
-  </header>
-
-  <!-- Channel 1 - Direct M3U8 -->
-  <div class="player-box">
-    <h2>
-      <img src="https://i.ibb.co/Y4pFSrM/star-sports-logo.jpg" alt="Star Sports Logo">
-      Star Sports 1 HD (Hindi)
-    </h2>
-    <video controls autoplay>
+  </header>  <div class="video-container" id="playerBox">
+    <video id="mainPlayer" controls autoplay>
       <source src="https://amit-1.allinonereborn.in/jiotv11/app/ts_live_1984.m3u8" type="application/x-mpegURL">
       Your browser does not support the video tag.
     </video>
-  </div>
-
-  <!-- Channel 2 - Iframe -->
-  <div class="player-box">
-    <h2>
-      <img src="https://i.ibb.co/Y4pFSrM/star-sports-logo.jpg" alt="Star Sports Logo">
-      Star Sports 1 (English)
-    </h2>
-    <iframe 
-      src="https://momixtvprimeweb.pages.dev/player?id=amzn1.dv.gti.38c10660-56d1-44cb-9e30-444712d7979a&source=Cloudfront1"
-      sandbox="allow-scripts allow-same-origin allow-fullscreen"
-      allowfullscreen>
-    </iframe>
-  </div>
-
-  <!-- Channel 3 - MLB -->
-  <div class="player-box">
-    <h2>
-      <img src="https://i.ibb.co/bgpRJFB/mlb-logo.jpg" alt="MLB Logo">
-      MLB Network HD (English)
-    </h2>
-    <iframe 
-      src="https://allinonereborn.com/spicetv-web/player.html?url=https%3A%2F%2Fallinonereborn.com%2Ftest.m3u8%3Fid%3D44598&name=MLB%20NETWORK%20HD"
-      sandbox="allow-scripts allow-same-origin allow-fullscreen"
-      allowfullscreen>
-    </iframe>
-  </div>
-
-  <script>
+  </div>  <div class="channel-bar">
+    <div onclick="switchToM3U8('https://amit-1.allinonereborn.in/jiotv11/app/ts_live_1984.m3u8')">
+      <img src="https://i.ibb.co/Y4pFSrM/star-sports-logo.jpg" alt="Star Sports">
+      <span>Star Sports Hindi</span>
+    </div>
+    <div onclick="switchToIframe('https://momixtvprimeweb.pages.dev/player?id=amzn1.dv.gti.38c10660-56d1-44cb-9e30-444712d7979a&source=Cloudfront1')">
+      <img src="https://i.ibb.co/Y4pFSrM/star-sports-logo.jpg" alt="Star Sports EN">
+      <span>Star Sports English</span>
+    </div>
+    <div onclick="switchToIframe('https://allinonereborn.com/spicetv-web/player.html?url=https%3A%2F%2Fallinonereborn.com%2Ftest.m3u8%3Fid%3D44598&name=MLB%20NETWORK%20HD')">
+      <img src="https://i.ibb.co/bgpRJFB/mlb-logo.jpg" alt="MLB">
+      <span>MLB Network</span>
+    </div>
+  </div>  <script>
+    function switchToM3U8(url) {
+      const playerBox = document.getElementById('playerBox');
+      playerBox.innerHTML = `<video controls autoplay><source src="${url}" type="application/x-mpegURL"></video>`;
+    }
+    function switchToIframe(url) {
+      const playerBox = document.getElementById('playerBox');
+      playerBox.innerHTML = `<iframe src="${url}" sandbox="allow-scripts allow-same-origin allow-fullscreen" allowfullscreen></iframe>`;
+    }
     function redirectToTelegram() {
       window.location.href = "https://t.me/IPTVM3Y";
     }
     function closePopup() {
       document.getElementById("popup").style.display = "none";
     }
-  </script>
-</body>
+  </script></body>
 </html>
