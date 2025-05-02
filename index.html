@@ -105,10 +105,18 @@
   </header>
   
   <div class="video-container">
+    <!-- Record Button (top-left corner) -->
+    <div class="record-btn">
+      <button onclick="toggleRecord()">Start Recording</button>
+    </div>
+    
+    <!-- Servers Button (top-right corner) -->
     <div class="server-selector">
       <button onclick="toggleServers()">Servers</button>
       <div class="server-list" id="serverList"></div>
     </div>
+
+    <!-- Quality Button (bottom-right corner) -->
     <div class="quality-selector">
       <button onclick="toggleQuality()">Quality</button>
       <div class="quality-options" id="qualityOptions">
@@ -117,9 +125,7 @@
         <div>360p</div>
       </div>
     </div>
-    <div class="record-btn">
-      <button onclick="toggleRecord()">Start Recording</button>
-    </div>
+
     <div id="playerBox">
       <video controls autoplay id="mainPlayer">
         <source src="https://amit-1.allinonereborn.in/jiotv11/app/ts_live_1984.m3u8" type="application/x-mpegURL">
@@ -189,12 +195,24 @@
       videoElement.controls = true;
       videoElement.autoplay = true;
       const source = document.createElement("source");
-      source.src = url;
-      source.type = "application/x-mpegURL";
-      videoElement.appendChild(source);
+
+      if (url.includes(".m3u8")) {
+        source.src = url;
+        source.type = "application/x-mpegURL";
+        videoElement.appendChild(source);
+      } else {
+        const iframe = document.createElement("iframe");
+        iframe.src = url;
+        iframe.frameBorder = "0";
+        iframe.allowFullscreen = true;
+        playerBox.innerHTML = "";
+        playerBox.appendChild(iframe);
+        return;
+      }
+
       playerBox.innerHTML = "";
       playerBox.appendChild(videoElement);
-      
+
       if (mediaRecorder) {
         mediaRecorder.stop();
       }
@@ -221,11 +239,11 @@
     function toggleRecord() {
       if (isRecording) {
         mediaRecorder.stop();
-        document.querySelector('.record-btn button').textContent = "Start Recording";
         isRecording = false;
+        document.querySelector('.record-btn button').innerText = "Start Recording";
       } else {
-        document.querySelector('.record-btn button').textContent = "Stop Recording";
         isRecording = true;
+        document.querySelector('.record-btn button').innerText = "Stop Recording";
       }
     }
 
