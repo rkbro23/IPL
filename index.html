@@ -55,6 +55,20 @@
       border-radius: 6px;
       cursor: pointer;
     }
+    .quality-selector {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+    }
+    .quality-selector button {
+      background: #00ffc3;
+      color: #000;
+      font-weight: bold;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
     .server-list {
       display: none;
       position: absolute;
@@ -105,10 +119,16 @@
       <button onclick="toggleServers()">Servers</button>
       <div class="server-list" id="serverList"></div>
     </div>
+    <div class="quality-selector">
+      <button onclick="toggleQuality()">Quality</button>
+    </div>
     <div id="playerBox">
       <video controls autoplay id="mainPlayer">
         <source src="https://amit-1.allinonereborn.in/jiotv11/app/ts_live_1984.m3u8" type="application/x-mpegURL">
       </video>
+    </div>
+    <div class="recording-buttons">
+      <button id="recordButton" onclick="toggleRecording()">Start Recording</button>
     </div>
   </div>
   <div class="channel-bar">
@@ -125,7 +145,7 @@
       <span>MLB Baseball ENG</span>
     </div>
   </div>
-  
+
   <script>
     const channels = [
       ["https://live.dtvxtream.com/lunar-ipl-hindi", "https://amit-1.allinonereborn.in/jiotv11/app/ts_live_1984.m3u8"],
@@ -134,6 +154,9 @@
     ];
 
     let currentChannel = 0;
+    let recording = false;
+    let mediaRecorder;
+    let recordedChunks = [];
 
     function toggleServers() {
       const list = document.getElementById("serverList");
@@ -164,10 +187,70 @@
       if (url.includes("iframe") || url.includes(".html") || url.includes("player?")) {
         playerBox.innerHTML = `<iframe src="${url}" frameborder="0" allowfullscreen></iframe>`;
       } else if (url.includes(".m3u8")) {
-        playerBox.innerHTML = `<video controls autoplay><source src="${url}" type="application/x-mpegURL"></video>`;
+        playerBox.innerHTML = `<video controls autoplay id="mainVideo"><source src="${url}" type="application/x-mpegURL"></video>`;
+        startRecording();  // Start recording on new stream
       } else {
         playerBox.innerHTML = `<iframe src="${url}" frameborder="0" allowfullscreen></iframe>`;
       }
+    }
+
+    function toggleQuality() {
+      const player = document.getElementById("mainPlayer");
+      if (player) {
+        let currentSrc = player.src;
+        // Switch quality by changing URL
+        if (currentSrc.includes("1984.m3u8")) {
+          player.src = "https://amit-1.allinonereborn.in/jiotv11/app/ts_live_1985.m3u8";  // Example of different quality URL
+        } else {
+          player.src = "https://amit-1.allinonereborn.in/jiotv11/app/ts_live_1984.m3u8";  // Example of different quality URL
+        }
+      }
+    }
+
+    function toggleRecording() {
+      const recordButton = document.getElementById("recordButton");
+      if (recording) {
+        mediaRecorder.stop();
+        recordButton.innerHTML = "Start Recording";
+        downloadRecording();
+      } else {
+        startRecording();
+        recordButton.innerHTML = "Stop Recording";
+      }
+      recording = !recording;
+    }
+
+    function startRecording() {
+      const stream = document.getElementById("mainPlayer").captureStream();
+      mediaRecorder = new MediaRecorder(stream);
+      mediaRecorder.ondataavailable = (event) => {
+        recordedChunks.push(event.data);
+      };
+      mediaRecorder.onstop = () => {
+        const blob = new Blob(recordedChunks, { type: 'video/mp4' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        a.download = 'recorded-video.mp4';
+        document.body.appendChild(a);
+        a.click();
+        recordedChunks = [];
+      };
+      mediaRecorder.start();
+    }
+
+    function downloadRecording() {
+      // Logic to download the recording once stopped
+      const blob = new Blob(recordedChunks, { type: 'video/mp4' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.style.display = 'none';
+      a.href = url;
+      a.download = 'recorded-video.mp4';
+      document.body.appendChild(a);
+      a.click();
+      recordedChunks = [];
     }
 
     loadChannel(0);
