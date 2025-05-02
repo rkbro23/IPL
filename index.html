@@ -125,7 +125,7 @@
       <img src="https://i.ibb.co/Y4pFSrM/1200px-Star_Sports_1_HD.png" alt="Star Sports">
       <span>Star Sports Hindi</span>
     </div>
-    <div onclick="switchToIframe('https://momixtvprimeweb.pages.dev/player?id=amzn1.dv.gti.38c10660-56d1-44cb-9e30-444712d7979a&source=Cloudfront1')">
+    <div onclick="switchToM3U8('https://amit-1.allinonereborn.in/jiotv11/app/ts_live_875.m3u8')">
       <img src="https://i.ibb.co/Y4pFSrM/1200px-Star_Sports_1_HD.png" alt="Star Sports EN">
       <span>Star Sports English</span>
     </div>
@@ -138,9 +138,9 @@
       const playerBox = document.getElementById('playerBox');
       playerBox.innerHTML = `<video controls autoplay><source src="${url}" type="application/x-mpegURL"></video>`;
     }
-    function switchToIframe(url) {
+    function switchToM3U8(url) {
       const playerBox = document.getElementById('playerBox');
-      playerBox.innerHTML = `<iframe src="${url}" sandbox="allow-scripts allow-same-origin allow-fullscreen" allowfullscreen></iframe>`;
+      playerBox.innerHTML = `<video controls autoplay><source src="${url}" type="application/x-mpegURL"></video>`;
     }
     function redirectToTelegram() {
       window.location.href = "https://t.me/IPTVM3Y";
