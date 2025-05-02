@@ -41,12 +41,10 @@
       border: 2px solid #00ffc3;
       box-shadow: 0 0 15px #00ffc3;
     }
+    /* Buttons position styling */
     .server-selector, .quality-selector, .record-btn {
       position: absolute;
-      top: 10px;
-      right: 10px;
-    }
-    .server-selector button, .quality-selector button, .record-btn button {
+      z-index: 10;
       background: #00ffc3;
       color: #000;
       font-weight: bold;
@@ -55,6 +53,25 @@
       border-radius: 6px;
       cursor: pointer;
     }
+
+    /* Top-right button position (Servers) */
+    .server-selector {
+      top: 10px;
+      right: 10px;
+    }
+
+    /* Top-left button position (Record) */
+    .record-btn {
+      top: 10px;
+      left: 10px;
+    }
+
+    /* Bottom-right button position (Quality) */
+    .quality-selector {
+      bottom: 10px;
+      right: 10px;
+    }
+
     .server-list, .quality-options {
       display: none;
       position: absolute;
