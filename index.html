@@ -98,24 +98,22 @@
   <header>
     <img src="https://i.ibb.co/7dcBV56/IMG_20250430_210037_251.png" alt="Logo">
     <h1>M3U PLAYLIST</h1>
-  </header>  <div class="video-container">
+  </header>
+  <div class="video-container">
     <div class="server-selector">
       <button onclick="toggleServers()">Servers</button>
       <div class="server-list" id="serverList"></div>
     </div>
-    <div id="playerBox">
-      <video controls autoplay id="mainPlayer">
-        <source src="https://amit-1.allinonereborn.in/jiotv11/app/ts_live_1984.m3u8" type="application/x-mpegURL">
-      </video>
-    </div>
-  </div>  <div class="channel-bar">
+    <div id="playerBox"></div>
+  </div>
+  <div class="channel-bar">
     <div onclick="loadChannel(0)">
       <img src="https://i.ibb.co/Y4pFSrM/1200px-Star_Sports_1_HD.png" alt="Star Sports 1 HD">
-      <span>Star Sports 2 HD</span>
+      <span>Star Sports 1 HD</span>
     </div>
     <div onclick="loadChannel(1)">
-      <img src="https://upload.wikimedia.org/wikipedia/en/f/f4/Willow_Cricket_HD_Logo.png" alt="Willow ENG">
-      <span>Willow ENG</span>
+      <img src="https://upload.wikimedia.org/wikipedia/en/f/f4/Willow_Cricket_HD_Logo.png" alt="Willow HD">
+      <span>Willow HD</span>
     </div>
     <div onclick="loadChannel(2)">
       <img src="https://i.ibb.co/bgpRJFB/images.png" alt="MLB">
@@ -145,10 +143,12 @@
       const list = document.getElementById("serverList");
       list.innerHTML = "";
       channels[index].forEach((url, i) => {
-        const div = document.createElement("div");
-        div.innerText = `Server ${i + 1}`;
-        div.onclick = () => loadStream(url);
-        list.appendChild(div);
+        if (url !== "no-url") {
+          const div = document.createElement("div");
+          div.innerText = `Server ${i + 1}`;
+          div.onclick = () => loadStream(url);
+          list.appendChild(div);
+        }
       });
     }
 
@@ -157,7 +157,7 @@
       if (url.includes("iframe") || url.includes(".html") || url.includes("player?")) {
         playerBox.innerHTML = `<iframe src="${url}" frameborder="0" allowfullscreen></iframe>`;
       } else {
-        playerBox.innerHTML = `<video controls autoplay><source src="${url}" type="application/x-mpegURL"></video>`;
+        playerBox.innerHTML = `<video controls autoplay id="mainPlayer"><source src="${url}" type="application/x-mpegURL"></video>`;
       }
     }
 
