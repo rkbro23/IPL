@@ -1,35 +1,34 @@
 <!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>M3U PLAYLIST - Live TV</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Live Sports Streaming</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+    * { box-sizing: border-box; font-family: 'Poppins', sans-serif; }
     body {
-      background: linear-gradient(to right, #000000, #1a1a1a);
-      color: #fff;
+      margin: 0;
       padding: 30px 10px;
+      background: linear-gradient(to right, #000, #1a1a1a);
+      color: white;
       text-align: center;
     }
     header {
       display: flex;
+      justify-content: center;
       align-items: center;
       gap: 15px;
-      justify-content: center;
       margin-bottom: 20px;
     }
-    header img {
-      height: 50px;
-      border-radius: 12px;
-    }
+    header img { height: 50px; border-radius: 12px; }
     header h1 {
+      color: #00ffc3;
       font-size: 1.6rem;
       font-weight: 600;
-      color: #00ffc3;
       text-shadow: 0 0 10px #00ffc3;
     }
     .video-container {
+      position: relative;
       width: 95%;
       max-width: 800px;
       margin: auto;
@@ -38,22 +37,51 @@
       width: 100%;
       height: 480px;
       border-radius: 12px;
-      outline: 2px solid #00ffc3;
+      border: 2px solid #00ffc3;
       box-shadow: 0 0 15px #00ffc3;
     }
+    .server-selector {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+    .server-selector button {
+      background: #00ffc3;
+      color: #000;
+      font-weight: bold;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .server-list {
+      display: none;
+      position: absolute;
+      right: 0;
+      background: #111;
+      border: 1px solid #00ffc3;
+      border-radius: 8px;
+      margin-top: 5px;
+      z-index: 99;
+    }
+    .server-list div {
+      padding: 8px 15px;
+      cursor: pointer;
+      color: #00ffc3;
+    }
+    .server-list div:hover { background: #00ffc3; color: #000; }
     .channel-bar {
-      margin-top: 30px;
       display: flex;
       justify-content: center;
       gap: 20px;
       flex-wrap: wrap;
+      margin-top: 30px;
     }
     .channel-bar div {
-      cursor: pointer;
       display: flex;
       flex-direction: column;
       align-items: center;
-      transition: 0.2s;
+      cursor: pointer;
     }
     .channel-bar img {
       height: 40px;
@@ -64,89 +92,75 @@
       color: #00ffc3;
       font-weight: bold;
     }
-    .channel-bar div:hover {
-      transform: scale(1.1);
-    }
-    .modal {
-      display: flex;
-      position: fixed;
-      z-index: 999;
-      top: 0; left: 0;
-      width: 100vw;
-      height: 100vh;
-      background-color: rgba(0,0,0,0.8);
-      align-items: center;
-      justify-content: center;
-    }
-    .modal-content {
-      background-color: #222;
-      padding: 20px 30px;
-      border-radius: 12px;
-      text-align: center;
-      max-width: 90%;
-      box-shadow: 0 0 10px #00ffc3;
-    }
-    .modal-buttons {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      margin-top: 20px;
-    }
-    .modal-buttons button {
-      padding: 8px 20px;
-      border: none;
-      border-radius: 5px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    .ok-btn { background-color: #00ffc3; color: #000; }
-    .cancel-btn { background-color: #444; color: #fff; }
   </style>
 </head>
-<body>  <div class="modal" id="popup">
-    <div class="modal-content">
-      <h2>Join Our Telegram Channel</h2>
-      <p>@IPTVM3Y for Latest M3U Playlists</p>
-      <div class="modal-buttons">
-        <button class="ok-btn" onclick="redirectToTelegram()">OK</button>
-        <button class="cancel-btn" onclick="closePopup()">Cancel</button>
-      </div>
-    </div>
-  </div>  <header>
+<body>
+  <header>
     <img src="https://i.ibb.co/7dcBV56/IMG_20250430_210037_251.png" alt="Logo">
     <h1>M3U PLAYLIST</h1>
-  </header>  <div class="video-container" id="playerBox">
-    <video id="mainPlayer" controls autoplay>
-      <source src="https://amit-1.allinonereborn.in/jiotv11/app/ts_live_1984.m3u8" type="application/x-mpegURL">
-      Your browser does not support the video tag.
-    </video>
+  </header>  <div class="video-container">
+    <div class="server-selector">
+      <button onclick="toggleServers()">Servers</button>
+      <div class="server-list" id="serverList"></div>
+    </div>
+    <div id="playerBox">
+      <video controls autoplay id="mainPlayer">
+        <source src="https://amit-1.allinonereborn.in/jiotv11/app/ts_live_1984.m3u8" type="application/x-mpegURL">
+      </video>
+    </div>
   </div>  <div class="channel-bar">
-    <div onclick="switchToM3U8('https://amit-1.allinonereborn.in/jiotv11/app/ts_live_1984.m3u8')">
-      <img src="https://i.ibb.co/Y4pFSrM/1200px-Star_Sports_1_HD.png" alt="Star Sports">
-      <span>Star Sports Hindi</span>
+    <div onclick="loadChannel(0)">
+      <img src="https://i.ibb.co/Y4pFSrM/1200px-Star_Sports_1_HD.png" alt="Star Sports 2 HD">
+      <span>Star Sports 2 HD</span>
     </div>
-    <div onclick="switchToM3U8('https://amit-1.allinonereborn.in/jiotv11/app/ts_live_875.m3u8')">
-      <img src="https://i.ibb.co/Y4pFSrM/1200px-Star_Sports_1_HD.png" alt="Star Sports EN">
-      <span>EUROSPORTS ENG</span>
+    <div onclick="loadChannel(1)">
+      <img src="https://upload.wikimedia.org/wikipedia/en/f/f4/Willow_Cricket_HD_Logo.png" alt="Willow ENG">
+      <span>Willow ENG</span>
     </div>
-    <div onclick="switchToM3U8('https://allinonereborn.com/test.m3u8/?id=44598')">
+    <div onclick="loadChannel(2)">
       <img src="https://i.ibb.co/bgpRJFB/images.png" alt="MLB">
-      <span>MLB Network</span>
+      <span>MLB Baseball ENG</span>
     </div>
   </div>  <script>
-    function switchToM3U8(url) {
-      const playerBox = document.getElementById('playerBox');
-      playerBox.innerHTML = `<video controls autoplay><source src="${url}" type="application/x-mpegURL"></video>`;
+    const channels = [
+      ["https://amit-1.allinonereborn.in/jiotv11/app/ts_live_1984.m3u8", "https://amit-1.allinonereborn.in/jiotv11/app/play_53706f72747331385f315f48443d3f3d31393834"],
+      ["https://momixtvprimeweb.pages.dev/player?id=amzn1.dv.gti.d568f3e2-2ddd-48bf-becc-5852fcf14e52&source=Akamai1", "https://amit-1.allinonereborn.in/jiotv11/app/play_4473706f7274735f48443d3f3d383735"],
+      ["https://allinonereborn.com/spicetv-web/player.html?url=https%3A%2F%2Fallinonereborn.com%2Ftest.m3u8%3Fid%3D44598&name=MLB%20NETWORK%20HD", "https://allinonereborn.com/test.m3u8?id=44598"]
+    ];
+
+    let currentChannel = 0;
+
+    function toggleServers() {
+      const list = document.getElementById("serverList");
+      list.style.display = list.style.display === "block" ? "none" : "block";
     }
-    function switchToM3U8(url) {
-      const playerBox = document.getElementById('playerBox');
-      playerBox.innerHTML = `<video controls autoplay><source src="${url}" type="application/x-mpegURL"></video>`;
+
+    function loadChannel(index) {
+      currentChannel = index;
+      showServers(index);
+      loadStream(channels[index][0]);
     }
-    function redirectToTelegram() {
-      window.location.href = "https://t.me/IPTVM3Y";
+
+    function showServers(index) {
+      const list = document.getElementById("serverList");
+      list.innerHTML = "";
+      channels[index].forEach((url, i) => {
+        const div = document.createElement("div");
+        div.innerText = `Server ${i + 1}`;
+        div.onclick = () => loadStream(url);
+        list.appendChild(div);
+      });
     }
-    function closePopup() {
-      document.getElementById("popup").style.display = "none";
+
+    function loadStream(url) {
+      const playerBox = document.getElementById("playerBox");
+      if (url.includes("iframe") || url.includes(".html") || url.includes("player?")) {
+        playerBox.innerHTML = `<iframe src="${url}" frameborder="0" allowfullscreen></iframe>`;
+      } else {
+        playerBox.innerHTML = `<video controls autoplay><source src="${url}" type="application/x-mpegURL"></video>`;
+      }
     }
+
+    loadChannel(0);
   </script></body>
 </html>
