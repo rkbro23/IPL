@@ -41,26 +41,13 @@
       border: 2px solid #00ffc3;
       box-shadow: 0 0 15px #00ffc3;
     }
-    .server-selector {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-    }
-    .server-selector button {
-      background: #00ffc3;
-      color: #000;
-      font-weight: bold;
-      border: none;
-      padding: 6px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-    .quality-selector {
+    .server-selector, .quality-selector, .recording-buttons {
       position: absolute;
       bottom: 10px;
       right: 10px;
+      margin-top: 10px;
     }
-    .quality-selector button {
+    .server-selector button, .quality-selector button, .recording-buttons button {
       background: #00ffc3;
       color: #000;
       font-weight: bold;
@@ -107,6 +94,11 @@
       color: #00ffc3;
       font-weight: bold;
     }
+    .watch-count {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      color: #00ffc3;
+    }
   </style>
 </head>
 <body>
@@ -130,6 +122,7 @@
     <div class="recording-buttons">
       <button id="recordButton" onclick="toggleRecording()">Start Recording</button>
     </div>
+    <div class="watch-count" id="watchCount">Watch Count: 0</div>
   </div>
   <div class="channel-bar">
     <div onclick="loadChannel(0)">
@@ -157,6 +150,8 @@
     let recording = false;
     let mediaRecorder;
     let recordedChunks = [];
+    let watchCount = 0;
+    let watchInterval;
 
     function toggleServers() {
       const list = document.getElementById("serverList");
@@ -182,13 +177,9 @@
 
     function loadStream(url) {
       const playerBox = document.getElementById("playerBox");
-
-      // Check if the URL is an iframe or M3U8 stream
-      if (url.includes("iframe") || url.includes(".html") || url.includes("player?")) {
-        playerBox.innerHTML = `<iframe src="${url}" frameborder="0" allowfullscreen></iframe>`;
-      } else if (url.includes(".m3u8")) {
+      if (url.includes(".m3u8")) {
         playerBox.innerHTML = `<video controls autoplay id="mainVideo"><source src="${url}" type="application/x-mpegURL"></video>`;
-        startRecording();  // Start recording on new stream
+        startWatchCount(); // Start fake watch count
       } else {
         playerBox.innerHTML = `<iframe src="${url}" frameborder="0" allowfullscreen></iframe>`;
       }
@@ -197,14 +188,20 @@
     function toggleQuality() {
       const player = document.getElementById("mainPlayer");
       if (player) {
-        let currentSrc = player.src;
-        // Switch quality by changing URL
-        if (currentSrc.includes("1984.m3u8")) {
-          player.src = "https://amit-1.allinonereborn.in/jiotv11/app/ts_live_1985.m3u8";  // Example of different quality URL
-        } else {
-          player.src = "https://amit-1.allinonereborn.in/jiotv11/app/ts_live_1984.m3u8";  // Example of different quality URL
-        }
+        // Fake quality change without affecting the stream
+        const qualityOptions = ['1080p', '720p', '480p', '360p'];
+        let currentQuality = player.getAttribute('data-quality') || '1080p';
+        let nextQuality = qualityOptions[(qualityOptions.indexOf(currentQuality) + 1) % 4];
+        player.setAttribute('data-quality', nextQuality);
+        alert(`Switched to ${nextQuality}`);
       }
+    }
+
+    function startWatchCount() {
+      watchInterval = setInterval(() => {
+        watchCount++;
+        document.getElementById('watchCount').innerText = `Watch Count: ${watchCount}`;
+      }, 1000); // Update every second
     }
 
     function toggleRecording() {
@@ -232,7 +229,7 @@
         const a = document.createElement('a');
         a.style.display = 'none';
         a.href = url;
-        a.download = 'recorded-video.mp4';
+        a.download = `recorded-video-${Date.now()}.mp4`;
         document.body.appendChild(a);
         a.click();
         recordedChunks = [];
@@ -247,7 +244,7 @@
       const a = document.createElement('a');
       a.style.display = 'none';
       a.href = url;
-      a.download = 'recorded-video.mp4';
+      a.download = `recorded-video-${Date.now()}.mp4`;
       document.body.appendChild(a);
       a.click();
       recordedChunks = [];
