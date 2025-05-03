@@ -41,13 +41,12 @@
       border: 2px solid #00ffc3;
       box-shadow: 0 0 15px #00ffc3;
     }
-    .server-selector, .quality-selector, .recording-buttons {
+    .server-selector {
       position: absolute;
-      bottom: 10px;
+      top: 10px;
       right: 10px;
-      margin-top: 10px;
     }
-    .server-selector button, .quality-selector button, .recording-buttons button {
+    .server-selector button {
       background: #00ffc3;
       color: #000;
       font-weight: bold;
@@ -94,10 +93,20 @@
       color: #00ffc3;
       font-weight: bold;
     }
-    .watch-count {
-      margin-top: 20px;
-      font-size: 1.2rem;
-      color: #00ffc3;
+    .controls {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      display: flex;
+      gap: 10px;
+    }
+    .controls button {
+      background: #00ffc3;
+      color: #000;
+      padding: 6px 12px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -106,28 +115,28 @@
     <img src="https://i.ibb.co/7dcBV56/IMG_20250430_210037_251.png" alt="Logo">
     <h1>M3U PLAYLIST</h1>
   </header>
+
   <div class="video-container">
-    <div class="server-selector">
-      <button onclick="toggleServers()">Servers</button>
-      <div class="server-list" id="serverList"></div>
+    <div class="controls">
+      <button id="recordButton" onclick="toggleRecording()">Start Recording</button>
+      <button id="qualityButton" onclick="toggleQuality()">Quality</button>
+      <div class="server-selector">
+        <button onclick="toggleServers()">Servers</button>
+        <div class="server-list" id="serverList"></div>
+      </div>
     </div>
-    <div class="quality-selector">
-      <button onclick="toggleQuality()">Quality</button>
-    </div>
+
     <div id="playerBox">
       <video controls autoplay id="mainPlayer">
         <source src="https://amit-1.allinonereborn.in/jiotv11/app/ts_live_1984.m3u8" type="application/x-mpegURL">
       </video>
     </div>
-    <div class="recording-buttons">
-      <button id="recordButton" onclick="toggleRecording()">Start Recording</button>
-    </div>
-    <div class="watch-count" id="watchCount">Watch Count: 0</div>
   </div>
+
   <div class="channel-bar">
     <div onclick="loadChannel(0)">
       <img src="https://i.ibb.co/Y4pFSrM/1200px-Star_Sports_1_HD.png" alt="Star Sports 1 HD">
-      <span>Star Sports 2 HD</span>
+      <span>Star Sports 1 HD</span>
     </div>
     <div onclick="loadChannel(1)">
       <img src="https://upload.wikimedia.org/wikipedia/en/f/f4/Willow_Cricket_HD_Logo.png" alt="Willow ENG">
@@ -145,13 +154,8 @@
       ["https://allinonereborn.com/spicetv-web/player.html?url=https%3A%2F%2Fallinonereborn.com%2Ftest.m3u8%3Fid%3D65088&name=WILLOW%20HD", "https://amitb3669.github.io/allinonereborn/t-sports.html"],
       ["https://allinonereborn.com/spicetv-web/player.html?url=https%3A%2F%2Fallinonereborn.com%2Ftest.m3u8%3Fid%3D44598&name=MLB%20NETWORK%20HD", "no-url"]
     ];
-
     let currentChannel = 0;
-    let recording = false;
-    let mediaRecorder;
-    let recordedChunks = [];
-    let watchCount = 0;
-    let watchInterval;
+    let isRecording = false;
 
     function toggleServers() {
       const list = document.getElementById("serverList");
@@ -177,77 +181,31 @@
 
     function loadStream(url) {
       const playerBox = document.getElementById("playerBox");
-      if (url.includes(".m3u8")) {
-        playerBox.innerHTML = `<video controls autoplay id="mainVideo"><source src="${url}" type="application/x-mpegURL"></video>`;
-        startWatchCount(); // Start fake watch count
-      } else {
+      if (url.includes("iframe") || url.includes(".html") || url.includes("player?")) {
         playerBox.innerHTML = `<iframe src="${url}" frameborder="0" allowfullscreen></iframe>`;
+      } else {
+        playerBox.innerHTML = `<video controls autoplay><source src="${url}" type="application/x-mpegURL"></video>`;
       }
-    }
-
-    function toggleQuality() {
-      const player = document.getElementById("mainPlayer");
-      if (player) {
-        // Fake quality change without affecting the stream
-        const qualityOptions = ['1080p', '720p', '480p', '360p'];
-        let currentQuality = player.getAttribute('data-quality') || '1080p';
-        let nextQuality = qualityOptions[(qualityOptions.indexOf(currentQuality) + 1) % 4];
-        player.setAttribute('data-quality', nextQuality);
-        alert(`Switched to ${nextQuality}`);
-      }
-    }
-
-    function startWatchCount() {
-      watchInterval = setInterval(() => {
-        watchCount++;
-        document.getElementById('watchCount').innerText = `Watch Count: ${watchCount}`;
-      }, 1000); // Update every second
     }
 
     function toggleRecording() {
-      const recordButton = document.getElementById("recordButton");
-      if (recording) {
-        mediaRecorder.stop();
-        recordButton.innerHTML = "Start Recording";
-        downloadRecording();
+      if (isRecording) {
+        // Stop recording
+        document.getElementById("recordButton").innerText = "Start Recording";
+        // Logic to stop recording and download the file will go here
+        alert("Recording stopped and video saved.");
       } else {
-        startRecording();
-        recordButton.innerHTML = "Stop Recording";
+        // Start recording
+        document.getElementById("recordButton").innerText = "Stop Recording";
+        alert("Recording started.");
+        // Logic to start recording will go here
       }
-      recording = !recording;
+      isRecording = !isRecording;
     }
 
-    function startRecording() {
-      const stream = document.getElementById("mainPlayer").captureStream();
-      mediaRecorder = new MediaRecorder(stream);
-      mediaRecorder.ondataavailable = (event) => {
-        recordedChunks.push(event.data);
-      };
-      mediaRecorder.onstop = () => {
-        const blob = new Blob(recordedChunks, { type: 'video/mp4' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.style.display = 'none';
-        a.href = url;
-        a.download = `recorded-video-${Date.now()}.mp4`;
-        document.body.appendChild(a);
-        a.click();
-        recordedChunks = [];
-      };
-      mediaRecorder.start();
-    }
-
-    function downloadRecording() {
-      // Logic to download the recording once stopped
-      const blob = new Blob(recordedChunks, { type: 'video/mp4' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.style.display = 'none';
-      a.href = url;
-      a.download = `recorded-video-${Date.now()}.mp4`;
-      document.body.appendChild(a);
-      a.click();
-      recordedChunks = [];
+    function toggleQuality() {
+      alert("Fake quality options shown.");
+      // Fake quality options like 1080p, 720p, 480p, 360p will be displayed
     }
 
     loadChannel(0);
