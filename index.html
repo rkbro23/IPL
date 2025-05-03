@@ -98,21 +98,21 @@
   <div class="video-container">
     <button class="server-selector" onclick="toggleServers()">Servers</button>
     <button class="record-btn" onclick="toggleRecording(this)">Start Recording</button>
-    <button class="quality-btn" onclick="toggleQualities()">Quality</button><div class="server-list" id="serverList"></div>
-<div class="quality-list" id="qualityList" style="bottom: 40px; right: 10px; position: absolute;">
-  <div>1080p</div>
-  <div>720p</div>
-  <div>480p</div>
-  <div>360p</div>
-</div>
-
-<div id="playerBox">
-  <video controls autoplay id="mainPlayer">
-    <source src="https://amit-1.allinonereborn.in/jiotv11/app/ts_live_1984.m3u8" type="application/x-mpegURL">
-  </video>
-</div>
-
-  </div>  <div class="channel-bar">
+    <button class="quality-btn" onclick="toggleQualities()">Quality</button>
+    <div class="server-list" id="serverList"></div>
+    <div class="quality-list" id="qualityList" style="bottom: 40px; right: 10px;">
+      <div>1080p</div>
+      <div>720p</div>
+      <div>480p</div>
+      <div>360p</div>
+    </div>
+    <div id="playerBox">
+      <video controls autoplay id="mainPlayer">
+        <source src="https://amit-1.allinonereborn.in/jiotv11/app/ts_live_1984.m3u8" type="application/x-mpegURL">
+      </video>
+    </div>
+  </div>
+  <div class="channel-bar">
     <div onclick="loadChannel(0)">
       <img src="https://i.ibb.co/Y4pFSrM/1200px-Star_Sports_1_HD.png" alt="Star Sports 1 HD">
       <span>Star Sports 1 HD</span>
@@ -125,70 +125,71 @@
       <img src="https://i.ibb.co/bgpRJFB/images.png" alt="MLB">
       <span>MLB Baseball</span>
     </div>
-  </div>  <script>
+  </div>
+  <script>
     const channels = [
-      ["https://live.dtvxtream.com/lunar-ipl-hindi", "https://amit-1.allinonereborn.in/jiotv11/app/ts_live_1984.m3u8"],
+      ["https://live.dtvxtream.com/lunar-ipl-hindi", "https://amit-1.allinonereborn.in/jiotv11/app/ts_live_1984.m3u8", "https://multimovies.media/movies/ipl-2025-mi-vs-csk/"],
       ["https://allinonereborn.com/spicetv-web/player.html?url=https%3A%2F%2Fallinonereborn.com%2Ftest.m3u8%3Fid%3D65088&name=WILLOW%20HD", "no-url"],
       ["https://allinonereborn.com/spicetv-web/player.html?url=https%3A%2F%2Fallinonereborn.com%2Ftest.m3u8%3Fid%3D44598&name=MLB%20NETWORK%20HD", "no-url"]
-    ];
+    ];let currentChannel = 0;
+let isRecording = false;
+let startTime = null;
 
-    let currentChannel = 0;
-    let isRecording = false;
-    let startTime = null;
+function toggleServers() {
+  const list = document.getElementById("serverList");
+  list.style.display = list.style.display === "block" ? "none" : "block";
+}
 
-    function toggleServers() {
-      const list = document.getElementById("serverList");
-      list.style.display = list.style.display === "block" ? "none" : "block";
-    }
+function toggleQualities() {
+  const list = document.getElementById("qualityList");
+  list.style.display = list.style.display === "block" ? "none" : "block";
+}
 
-    function toggleQualities() {
-      const list = document.getElementById("qualityList");
-      list.style.display = list.style.display === "block" ? "none" : "block";
-    }
+function loadChannel(index) {
+  currentChannel = index;
+  showServers(index);
+  loadStream(channels[index][0]);
+}
 
-    function loadChannel(index) {
-      currentChannel = index;
-      showServers(index);
-      loadStream(channels[index][0]);
-    }
+function showServers(index) {
+  const list = document.getElementById("serverList");
+  list.innerHTML = "";
+  channels[index].forEach((url, i) => {
+    const div = document.createElement("div");
+    div.innerText = url === "no-url" ? "NO OTHER SERVER" : `Server ${i + 1}`;
+    div.onclick = () => url !== "no-url" && loadStream(url);
+    list.appendChild(div);
+  });
+}
 
-    function showServers(index) {
-      const list = document.getElementById("serverList");
-      list.innerHTML = "";
-      channels[index].forEach((url, i) => {
-        const div = document.createElement("div");
-        div.innerText = url === "no-url" ? "NO OTHER SERVER" : `Server ${i + 1}`;
-        div.onclick = () => url !== "no-url" && loadStream(url);
-        list.appendChild(div);
-      });
-    }
+function loadStream(url) {
+  const playerBox = document.getElementById("playerBox");
+  if (url.includes("iframe") || url.includes(".html") || url.includes("player?") || url.includes("multimovies")) {
+    playerBox.innerHTML = `<iframe src="${url}" frameborder="0" allowfullscreen></iframe>`;
+  } else {
+    playerBox.innerHTML = `<video controls autoplay id="mainPlayer"><source src="${url}" type="application/x-mpegURL"></video>`;
+  }
+}
 
-    function loadStream(url) {
-      const playerBox = document.getElementById("playerBox");
-      if (url.includes("iframe") || url.includes(".html") || url.includes("player?")) {
-        playerBox.innerHTML = `<iframe src="${url}" frameborder="0" allowfullscreen></iframe>`;
-      } else {
-        playerBox.innerHTML = `<video controls autoplay id="mainPlayer"><source src="${url}" type="application/x-mpegURL"></video>`;
-      }
-    }
+function toggleRecording(btn) {
+  if (!isRecording) {
+    isRecording = true;
+    startTime = new Date();
+    btn.innerText = "Stop Recording";
+  } else {
+    const duration = (new Date() - startTime) / 1000;
+    const blob = new Blob([`Fake recorded content of ${duration.toFixed(0)}s`], { type: "video/mp4" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = `recording_${Date.now()}.mp4`;
+    a.click();
+    isRecording = false;
+    btn.innerText = "Start Recording";
+  }
+}
 
-    function toggleRecording(btn) {
-      if (!isRecording) {
-        isRecording = true;
-        startTime = new Date();
-        btn.innerText = "Stop Recording";
-      } else {
-        const duration = (new Date() - startTime) / 1000;
-        const blob = new Blob([`Fake recorded content of ${duration.toFixed(0)}s`], { type: "video/mp4" });
-        const a = document.createElement("a");
-        a.href = URL.createObjectURL(blob);
-        a.download = `recording_${Date.now()}.mp4`;
-        a.click();
-        isRecording = false;
-        btn.innerText = "Start Recording";
-      }
-    }
+loadChannel(0);
 
-    loadChannel(0);
-  </script></body>
+  </script>
+</body>
 </html>
