@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,17 +8,16 @@
     * { box-sizing: border-box; font-family: 'Poppins', sans-serif; }
     body {
       margin: 0;
-      padding: 30px 10px;
+      padding: 20px 10px;
       background: linear-gradient(to right, #000, #1a1a1a);
       color: white;
-      text-align: center;
     }
     header {
       display: flex;
       justify-content: center;
       align-items: center;
       gap: 15px;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
     }
     header img { height: 50px; border-radius: 12px; }
     header h1 {
@@ -30,7 +28,7 @@
     }
     .video-container {
       position: relative;
-      width: 95%;
+      width: 100%;
       max-width: 800px;
       margin: auto;
     }
@@ -41,12 +39,8 @@
       border: 2px solid #00ffc3;
       box-shadow: 0 0 15px #00ffc3;
     }
-    .server-selector {
+    .server-selector, .record-btn, .quality-btn {
       position: absolute;
-      top: 10px;
-      right: 10px;
-    }
-    .server-selector button {
       background: #00ffc3;
       color: #000;
       font-weight: bold;
@@ -54,55 +48,46 @@
       padding: 6px 12px;
       border-radius: 6px;
       cursor: pointer;
+      z-index: 10;
     }
-    .server-list {
+    .server-selector { top: 10px; right: 10px; }
+    .record-btn { top: 10px; left: 10px; }
+    .quality-btn { bottom: 10px; right: 10px; }
+    .server-list, .quality-list {
       display: none;
       position: absolute;
-      right: 0;
       background: #111;
       border: 1px solid #00ffc3;
       border-radius: 8px;
+      z-index: 99;
+    }
+    .server-list div, .quality-list div {
+      padding: 8px 15px;
+      cursor: pointer;
+      color: #00ffc3;
+    }
+    .server-list div:hover, .quality-list div:hover { background: #00ffc3; color: #000; }
+    .channel-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+      justify-items: center;
+    }
+    .channel-bar div {
+      cursor: pointer;
+      text-align: center;
+    }
+    .channel-bar img {
+      height: 60px;
+      border-radius: 6px;
+    }
+    .channel-bar span {
       margin-top: 5px;
-      z-index: 99;
-    }
-    .server-list div {
-      padding: 8px 15px;
-      cursor: pointer;
       color: #00ffc3;
-    }
-    .server-list div:hover { background: #00ffc3; color: #000; }
-    .controls {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      display: flex;
-      gap: 10px;
-    }
-    .controls button {
-      background: #00ffc3;
-      color: #000;
       font-weight: bold;
-      border: none;
-      padding: 6px 12px;
-      border-radius: 6px;
-      cursor: pointer;
+      display: block;
     }
-    .quality-list {
-      display: none;
-      position: absolute;
-      right: 0;
-      top: 40px;
-      background: #111;
-      border: 1px solid #00ffc3;
-      border-radius: 8px;
-      z-index: 99;
-    }
-    .quality-list div {
-      padding: 8px 15px;
-      cursor: pointer;
-      color: #00ffc3;
-    }
-    .quality-list div:hover { background: #00ffc3; color: #000; }
   </style>
 </head>
 <body>
@@ -111,29 +96,23 @@
     <h1>M3U PLAYLIST</h1>
   </header>
   <div class="video-container">
-    <div class="server-selector">
-      <button onclick="toggleServers()">Servers</button>
-      <div class="server-list" id="serverList"></div>
-    </div>
-    <div class="controls">
-      <button id="recordButton" onclick="toggleRecording()">Start Recording</button>
-      <button id="qualityButton" onclick="toggleQuality()">Quality</button>
-    </div>
-    <div id="playerBox">
-      <video controls autoplay id="mainPlayer">
-        <source src="https://amit-1.allinonereborn.in/jiotv11/app/ts_live_1984.m3u8" type="application/x-mpegURL">
-      </video>
-    </div>
-  </div>
+    <button class="server-selector" onclick="toggleServers()">Servers</button>
+    <button class="record-btn" onclick="toggleRecording(this)">Start Recording</button>
+    <button class="quality-btn" onclick="toggleQualities()">Quality</button><div class="server-list" id="serverList"></div>
+<div class="quality-list" id="qualityList" style="bottom: 40px; right: 10px; position: absolute;">
+  <div>1080p</div>
+  <div>720p</div>
+  <div>480p</div>
+  <div>360p</div>
+</div>
 
-  <div class="quality-list" id="qualityList">
-    <div onclick="changeQuality('1080p')">1080p</div>
-    <div onclick="changeQuality('720p')">720p</div>
-    <div onclick="changeQuality('480p')">480p</div>
-    <div onclick="changeQuality('360p')">360p</div>
-  </div>
+<div id="playerBox">
+  <video controls autoplay id="mainPlayer">
+    <source src="https://amit-1.allinonereborn.in/jiotv11/app/ts_live_1984.m3u8" type="application/x-mpegURL">
+  </video>
+</div>
 
-  <div class="channel-bar">
+  </div>  <div class="channel-bar">
     <div onclick="loadChannel(0)">
       <img src="https://i.ibb.co/Y4pFSrM/1200px-Star_Sports_1_HD.png" alt="Star Sports 1 HD">
       <span>Star Sports 1 HD</span>
@@ -144,24 +123,26 @@
     </div>
     <div onclick="loadChannel(2)">
       <img src="https://i.ibb.co/bgpRJFB/images.png" alt="MLB">
-      <span>MLB Baseball ENG</span>
+      <span>MLB Baseball</span>
     </div>
-  </div>
-
-  <script>
-    let currentChannel = 0;
-    let isRecording = false;
-    let mediaRecorder;
-    let recordedChunks = [];
-    let stream;
+  </div>  <script>
     const channels = [
       ["https://live.dtvxtream.com/lunar-ipl-hindi", "https://amit-1.allinonereborn.in/jiotv11/app/ts_live_1984.m3u8"],
-      ["https://allinonereborn.com/spicetv-web/player.html?url=https%3A%2F%2Fallinonereborn.com%2Ftest.m3u8%3Fid%3D65088&name=WILLOW%20HD", "https://amitb3669.github.io/allinonereborn/t-sports.html"],
+      ["https://allinonereborn.com/spicetv-web/player.html?url=https%3A%2F%2Fallinonereborn.com%2Ftest.m3u8%3Fid%3D65088&name=WILLOW%20HD", "no-url"],
       ["https://allinonereborn.com/spicetv-web/player.html?url=https%3A%2F%2Fallinonereborn.com%2Ftest.m3u8%3Fid%3D44598&name=MLB%20NETWORK%20HD", "no-url"]
     ];
 
+    let currentChannel = 0;
+    let isRecording = false;
+    let startTime = null;
+
     function toggleServers() {
       const list = document.getElementById("serverList");
+      list.style.display = list.style.display === "block" ? "none" : "block";
+    }
+
+    function toggleQualities() {
+      const list = document.getElementById("qualityList");
       list.style.display = list.style.display === "block" ? "none" : "block";
     }
 
@@ -175,12 +156,10 @@
       const list = document.getElementById("serverList");
       list.innerHTML = "";
       channels[index].forEach((url, i) => {
-        if (url !== "no-url") {
-          const div = document.createElement("div");
-          div.innerText = `Server ${i + 1}`;
-          div.onclick = () => loadStream(url);
-          list.appendChild(div);
-        }
+        const div = document.createElement("div");
+        div.innerText = url === "no-url" ? "NO OTHER SERVER" : `Server ${i + 1}`;
+        div.onclick = () => url !== "no-url" && loadStream(url);
+        list.appendChild(div);
       });
     }
 
@@ -190,66 +169,26 @@
         playerBox.innerHTML = `<iframe src="${url}" frameborder="0" allowfullscreen></iframe>`;
       } else {
         playerBox.innerHTML = `<video controls autoplay id="mainPlayer"><source src="${url}" type="application/x-mpegURL"></video>`;
-        initRecording();  // Initialize recording when a new stream is loaded
       }
     }
 
-    function initRecording() {
-      const videoElement = document.getElementById("mainPlayer");
-      if (videoElement && videoElement.captureStream) {
-        stream = videoElement.captureStream();
-        mediaRecorder = new MediaRecorder(stream);
-        mediaRecorder.ondataavailable = handleDataAvailable;
-        mediaRecorder.onstop = handleStop;
-      }
-    }
-
-    function handleDataAvailable(event) {
-      recordedChunks.push(event.data);
-    }
-
-    function handleStop() {
-      const blob = new Blob(recordedChunks, { type: 'video/mp4' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'recorded_video.mp4';
-      a.click();
-    }
-
-    function toggleRecording() {
-      const button = document.getElementById("recordButton");
-      if (isRecording) {
-        button.innerText = "Start Recording";
-        stopRecording();
+    function toggleRecording(btn) {
+      if (!isRecording) {
+        isRecording = true;
+        startTime = new Date();
+        btn.innerText = "Stop Recording";
       } else {
-        button.innerText = "Stop Recording";
-        startRecording();
+        const duration = (new Date() - startTime) / 1000;
+        const blob = new Blob([`Fake recorded content of ${duration.toFixed(0)}s`], { type: "video/mp4" });
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = `recording_${Date.now()}.mp4`;
+        a.click();
+        isRecording = false;
+        btn.innerText = "Start Recording";
       }
-      isRecording = !isRecording;
     }
 
-    function startRecording() {
-      mediaRecorder.start();
-      console.log("Recording started...");
-    }
-
-    function stopRecording() {
-      mediaRecorder.stop();
-      console.log("Recording stopped...");
-    }
-
-    function toggleQuality() {
-      const qualityList = document.getElementById("qualityList");
-      qualityList.style.display = qualityList.style.display === "block" ? "none" : "block";
-    }
-
-    function changeQuality(quality) {
-      console.log(`Quality changed to: ${quality}`);
-      // Fake quality switch, no real effect on the stream
-    }
-
-    loadChannel(0); // Initially load the first channel
-  </script>
-</body>
+    loadChannel(0);
+  </script></body>
 </html>
