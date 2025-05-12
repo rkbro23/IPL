@@ -1,6 +1,4 @@
-<!DOCTYPE html><html lang="en">
-<head>
-  <meta charset="UTF-8" />
+<!DOCTYPE html><html lang="en"><head>  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>RK Live Sports Streaming</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
@@ -39,7 +37,7 @@
       border: 2px solid #00ffc3;
       box-shadow: 0 0 15px #00ffc3;
     }
-    .server-selector, .record-btn, .quality-btn {
+    .server-selector, .record-btn, .quality-btn, .pip-btn, .volume-slider {
       position: absolute;
       background: #00ffc3;
       color: #000;
@@ -53,6 +51,13 @@
     .server-selector { top: 10px; right: 10px; }
     .record-btn { top: 10px; left: 10px; }
     .quality-btn { bottom: 10px; right: 10px; }
+    .pip-btn { bottom: 10px; left: 10px; }
+    .volume-slider {
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      height: 30px;
+    }
     .server-list, .quality-list {
       display: none;
       position: absolute;
@@ -99,6 +104,8 @@
     <button class="server-selector" onclick="toggleServers()">Servers</button>
     <button class="record-btn" onclick="toggleRecording(this)">Start Recording</button>
     <button class="quality-btn" onclick="toggleQualities()">Quality</button>
+    <button class="pip-btn" onclick="enterPiP()">PiP</button>
+    <input type="range" class="volume-slider" id="volumeControl" min="0" max="1" step="0.05" value="1">
     <div class="server-list" id="serverList"></div>
     <div class="quality-list" id="qualityList" style="bottom: 40px; right: 10px;">
       <div>1080p</div>
@@ -128,24 +135,13 @@
   </div>
   <script>
     const channels = [
-  [
-    "https://amit-1.allinonereborn.in/jiotv414/app/ts_live_1984.m3u8", 
-    "https://amit-1.allinonereborn.in/jiotv414/app/ts_live_1985.m3u8", 
-    "https://amit-1.allinonereborn.in/jiotv414/app/ts_live_1998.m3u8"
-  ],
-  [
-    "https://allinonereborn.com/spicetv-web/player.html?url=https%3A%2F%2Fallinonereborn.com%2Ftest.m3u8%3Fid%3D65088&name=WILLOW%20HD",
-    "https://allinonereborn.com/op141.m3u8?id=167582"
-  ],
-  [
-    "https://allinonereborn.com/spicetv-web/player.html?url=https%3A%2F%2Fallinonereborn.com%2Ftest.m3u8%3Fid%3D44598&name=MLB%20NETWORK%20HD", 
-    "https://allinonereborn.com/op141.m3u8?id=167583"
-  ]
-];let currentChannel = 0;
-let isRecording = false;
-let startTime = null;
-
-function toggleServers() {
+      ["https://amit-1.allinonereborn.in/jiotv414/app/ts_live_1984.m3u8", "https://amit-1.allinonereborn.in/jiotv414/app/ts_live_1985.m3u8", "https://amit-1.allinonereborn.in/jiotv414/app/ts_live_1998.m3u8"],
+      ["https://allinonereborn.com/spicetv-web/player.html?url=https%3A%2F%2Fallinonereborn.com%2Ftest.m3u8%3Fid%3D65088&name=WILLOW%20HD", "https://allinonereborn.com/op141.m3u8?id=167582"],
+      ["https://allinonereborn.com/spicetv-web/player.html?url=https%3A%2F%2Fallinonereborn.com%2Ftest.m3u8%3Fid%3D44598&name=MLB%20NETWORK%20HD", "https://allinonereborn.com/op141.m3u8?id=167583"]
+    ];
+    let currentChannel = 0;
+    let isRecording = false;
+    let startTime = null;function toggleServers() {
   const list = document.getElementById("serverList");
   list.style.display = list.style.display === "block" ? "none" : "block";
 }
@@ -178,6 +174,10 @@ function loadStream(url) {
     playerBox.innerHTML = `<iframe src="${url}" frameborder="0" allowfullscreen></iframe>`;
   } else {
     playerBox.innerHTML = `<video controls autoplay id="mainPlayer"><source src="${url}" type="application/x-mpegURL"></video>`;
+    document.getElementById("volumeControl").addEventListener("input", function () {
+      const video = document.getElementById("mainPlayer");
+      video.volume = this.value;
+    });
   }
 }
 
@@ -197,6 +197,21 @@ function toggleRecording(btn) {
     btn.innerText = "Start Recording";
   }
 }
+
+function enterPiP() {
+  const video = document.getElementById("mainPlayer");
+  if (video && document.pictureInPictureEnabled && !video.disablePictureInPicture) {
+    video.requestPictureInPicture().catch(console.error);
+  }
+}
+
+document.addEventListener("keydown", function(e) {
+  const video = document.getElementById("mainPlayer");
+  if (!video) return;
+  if (e.code === "Space") video.paused ? video.play() : video.pause();
+  if (e.code === "ArrowRight") video.currentTime += 10;
+  if (e.code === "ArrowLeft") video.currentTime -= 10;
+});
 
 loadChannel(0);
 
