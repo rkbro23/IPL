@@ -1,0 +1,13 @@
+#EXTM3U
+#EXTINF:-1 tvg-id="" tvg-name="IN: Star Sports 1" tvg-logo="http://s3.i3ns.net:2052/portal/picon/2021-06/67b5b20cb871eb0a1d91bedb8be826ff.png" group-title="India ➾ Sports",IN: Star Sports 1
+http://iptvtree.net:8080/F15554/Tve5ZWQEd485/3630
+#EXTINF:-1 tvg-id="" tvg-name="IN: Star Sports 2" tvg-logo="http://s3.i3ns.net:2052/portal/picon/2021-06/8d83db120afcaa7b2d4ef5422fb3ace5.png" group-title="India ➾ Sports",IN: Star Sports 2
+http://iptvtree.net:8080/F15554/Tve5ZWQEd485/3631
+#EXTINF:-1 tvg-id="" tvg-name="IN: Star Sports 3" tvg-logo="http://s3.i3ns.net:2052/portal/picon/2021-06/cb6f86b5373ecc7840bd3b57967f37bc.png" group-title="India ➾ Sports",IN: Star Sports 3
+http://iptvtree.net:8080/F15554/Tve5ZWQEd485/62584
+#EXTINF:-1 tvg-id="" tvg-name="IN: Willow" tvg-logo="http://s3.i3ns.net:2052/portal/picon/2023-05/b8b56a633aad6900e1565ed87811f342.png" group-title="India ➾ Sports",IN: Willow
+http://iptvtree.net:8080/F15554/Tve5ZWQEd485/165776
+#EXTINF:-1 tvg-id="" tvg-name="US: Willow" tvg-logo="http://s3.i3ns.net:2052/portal/picon/2021-07/3a20afd154f94482c2f456803bed516a.png" group-title="USA ➾ Sports",US: Willow
+http://iptvtree.net:8080/F15554/Tve5ZWQEd485/2372
+#EXTINF:-1 tvg-id="" tvg-name="US: Willow Xtra" tvg-logo="http://s3.i3ns.net:2052/portal/picon/2022-08/2a9ac0a71cf1b13842fb8ac73f0f7bad.png" group-title="USA ➾ Sports",US: Willow Xtra
+http://iptvtree.net:8080/F15554/Tve5ZWQEd485/296763
