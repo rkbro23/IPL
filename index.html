@@ -135,7 +135,7 @@
   </div>
   <script>
     const channels = [
-      ["http://iptvtree.net:8080/F15554/Tve5ZWQEd485/3630", "https://amssandbrix.b-cdn.net/LiveApp/streams/NKAv2V2BTnEuVJdS170390248731.m3u8", "http://iptvtree.net:8080/F15554/Tve5ZWQEd485/3631"],
+      ["http://opstorm-001-site1.ltempurl.com/Puboplxo/opplx5.php?id=382205", "https://amssandbrix.b-cdn.net/LiveApp/streams/NKAv2V2BTnEuVJdS170390248731.m3u8", "http://iptvtree.net:8080/F15554/Tve5ZWQEd485/3631"],
       ["https://allinonereborn.com/spicetv-web/player.html?url=https%3A%2F%2Fallinonereborn.com%2Ftest.m3u8%3Fid%3D65088&name=WILLOW%20HD", "https://amitb3669.github.io/allinonereborn/sandbric.html"],
       ["https://allinonereborn.com/spicetv-web/player.html?url=https%3A%2F%2Fallinonereborn.com%2Ftest.m3u8%3Fid%3D44598&name=MLB%20NETWORK%20HD", "http://iptvtree.net:8080/F15554/Tve5ZWQEd485/296763"]
     ];
@@ -170,10 +170,19 @@ function showServers(index) {
 
 function loadStream(url) {
   const playerBox = document.getElementById("playerBox");
-  if (url.includes("iframe") || url.includes(".html") || url.includes("player?") || url.includes("multimovies")) {
-    playerBox.innerHTML = `<iframe src="${url}" frameborder="0" allowfullscreen></iframe>`;
+  // Treat opstorm-001 URLs as iframe embeds
+  if (
+    url.includes("iframe") || 
+    url.includes(".html") || 
+    url.includes("player?") || 
+    url.includes("multimovies") ||
+    url.includes("opstorm-001-site1.ltempurl.com/Puboplxo/opplx5.php?id=")
+  ) {
+    playerBox.innerHTML = `<iframe src="${url}" frameborder="0" allowfullscreen style="width:100%; height:480px; border-radius:12px; border:2px solid #00ffc3;"></iframe>`;
   } else {
-    playerBox.innerHTML = `<video controls autoplay id="mainPlayer"><source src="${url}" type="application/x-mpegURL"></video>`;
+    playerBox.innerHTML = `<video controls autoplay id="mainPlayer" style="width:100%; height:480px; border-radius:12px; border:2px solid #00ffc3;">
+      <source src="${url}" type="application/x-mpegURL">
+    </video>`;
     document.getElementById("volumeControl").addEventListener("input", function () {
       const video = document.getElementById("mainPlayer");
       video.volume = this.value;
