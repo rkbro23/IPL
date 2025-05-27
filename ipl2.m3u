@@ -1,0 +1,29 @@
+#EXTM3U
+
+#EXTINF:-1 tvg-id="star_sports_1_hindi_hd" group-title="Star Sports|Hindi|HD",STAR SPORTS 1 HINDI HD
+http://hellosky.live:8080/live/HameedDubai/0507067610/239610.m3u8
+
+#EXTINF:-1 tvg-id="star_sports_1_hindi_4k" group-title="Star Sports|Hindi|4K",STAR SPORTS 1 HINDI 4K
+http://hellosky.live:8080/live/HameedDubai/0507067610/239595.m3u8
+
+#EXTINF:-1 tvg-id="star_sports_2_hindi_hd" group-title="Star Sports|Hindi|HD",STAR SPORTS 2 HINDI HD
+http://hellosky.live:8080/live/HameedDubai/0507067610/239612.m3u8
+
+#EXTINF:-1 tvg-id="star_sports_1_english_hd" group-title="Star Sports|English|HD",STAR SPORTS 1 ENG HD
+http://hellosky.live:8080/live/HameedDubai/0507067610/239599.m3u8
+
+#EXTINF:-1 tvg-id="star_sports_1_english_fhd" group-title="Star Sports|English|FHD",STAR SPORTS 1 ENG FHD
+http://hellosky.live:8080/live/HameedDubai/0507067610/239600.m3u8
+
+#EXTINF:-1 tvg-id="star_sports_1_english_4k" group-title="Star Sports|English|4K",STAR SPORTS 1 ENG 4K
+http://hellosky.live:8080/live/HameedDubai/0507067610/239601.m3u8
+
+#EXTINF:-1 tvg-id="star_sports_2_english_hd" group-title="Star Sports|English|HD",STAR SPORTS 2 ENG HD
+http://hellosky.live:8080/live/HameedDubai/0507067610/240785.m3u8
+
+#EXTINF:-1 tvg-id="star_sports_1_tamil_hd" group-title="Star Sports|Tamil|HD",STAR SPORTS 1 TAMIL HD
+http://hellosky.live:8080/live/HameedDubai/0507067610/239596.m3u8
+
+#EXTINF:-1 tvg-id="star_sports_1_kannada_hd" group-title="Star Sports|Kannada|HD",STAR SPORTS 1 KANNADA HD
+http://hellosky.live:8080/live/HameedDubai/0507067610/239594.m3u8
+
