@@ -1,0 +1,39 @@
+#EXTM3U
+#EXTINF:-1 tvg-logo="https://www.fancode.com/skillup-uploads/cms-media/Indian-Warriors-VS-American-Strikers_old.jpg" group-title="live",American Strikers vs Indian Warriors
+https://dai.fancode.com/primary/127445_english_hls_64559ta-di_h264/index.m3u8
+#EXTINF:-1 tvg-logo="https://www.fancode.com/skillup-uploads/cms-media/125525_5191_KOY_CDS_fc-web.jpg" group-title="live",Combined Districts vs Kottayam
+https://dai.fancode.com/primary/125525_english_hls_25542ta-di_h264/index.m3u8
+#EXTINF:-1 tvg-logo="https://www.fancode.com/skillup-uploads/cms-media/126240_5224_JER-W_SWE-W_fc-web.jpg" group-title="live",Sweden Women vs Jersey Women
+https://dai.fancode.com/primary/126240_english_hls_25568ta-di_h264/index.m3u8
+#EXTINF:-1 tvg-logo="https://www.fancode.com/skillup-uploads/cms-media/126239_5224_ITA-W_ESP-W_fc-web.jpg" group-title="live",Italy Women vs Spain Women
+https://dai.fancode.com/primary/126239_english_hls_63604ta-di_h264/index.m3u8
+#EXTINF:-1 tvg-logo="https://www.fancode.com/skillup-uploads/cms-media/126815_5237_Alex-De-Minaur_Alexander-Bublik_fc-web.jpg" group-title="live",Alex De Minaur vs Alexander Bublik
+https://sonypartnersdaimenew.akamaized.net/hls/live/2005444/DAI41C14/master_mdh.m3u8?hdnea=exp=1748552286~acl=/*~id=85974390620638463628714081887451~hmac=ec1a7b94c61121206551c3cce220aba16ed48b5a1a7d452764f543caae13a10b
+#EXTINF:-1 tvg-logo="https://www.fancode.com/skillup-uploads/cms-media/126924_5237_Magdalena-Frech_Marketa-Vondrousova_fc-web.jpg" group-title="live",Magdalena Frech vs Marketa Vondrousova
+https://dai.fancode.com/primary/126924_english_hls_83129ta-di_h264/index.m3u8
+#EXTINF:-1 tvg-logo="https://www.fancode.com/skillup-uploads/cms-media/127125_5237_Ebden-Peers_Blanchet-Jacquet_fc-web.jpg" group-title="live",Ebden/Peers vs Blanchet/Jacquet
+https://dai.fancode.com/primary/127125_english_hls_25125ta-di_h264/index.m3u8
+#EXTINF:-1 tvg-logo="https://www.fancode.com/skillup-uploads/cms-media/126916_5237_Marie-Bouzkova_Sonay-Kartal_fc-web.jpg" group-title="live",Marie Bouzkova vs Sonay Kartal
+https://dai.fancode.com/primary/126916_english_hls_75872ta-di_h264/index.m3u8
+#EXTINF:-1 tvg-logo="https://www.fancode.com/skillup-uploads/cms-media/126818_5237_Jiri-Lehecka_Alejandro-Davidovich-Fokina_fc-web.jpg" group-title="live",Jiri Lehecka vs Alejandro Davidovich Fokina
+https://dai.fancode.com/primary/126818_english_hls_45266ta-di_h264/index.m3u8
+#EXTINF:-1 tvg-logo="https://www.fancode.com/skillup-uploads/cms-media/126816_5237_Jaume-Munar_Arthur-Fils_fc-web.jpg" group-title="live",Jaume Munar vs Arthur Fils
+https://sonypartnersdaimenew.akamaized.net/hls/live/2022315/DAI39SLC/master_mdh.m3u8?hdnea=exp=1748552286~acl=/*~id=85974390620638463628714081887451~hmac=ec1a7b94c61121206551c3cce220aba16ed48b5a1a7d452764f543caae13a10b
+#EXTINF:-1 tvg-logo="https://www.fancode.com/skillup-uploads/cms-media/126814_5237_Henrique-Rocha_Jakub-Mensik_fc-web.jpg" group-title="live",Henrique Rocha vs Jakub Mensik
+https://dai.fancode.com/primary/126814_english_hls_2360ta-di_h264/index.m3u8
+#EXTINF:-1 tvg-logo="https://www.fancode.com/skillup-uploads/cms-media/127116_5237_Cazaux-Mayot_Murray-Ram_fc-web.jpg" group-title="live",Cazaux/Mayot vs Murray/Ram
+https://dai.fancode.com/primary/127116_english_hls_72997ta-di_h264/index.m3u8
+#EXTINF:-1 tvg-logo="https://www.fancode.com/skillup-uploads/cms-media/127182_5237_Khromacheva-Stollar_Wang-Zheng_fc-web.jpg" group-title="live",Khromacheva/Stollar vs Wang/Zheng
+https://dai.fancode.com/primary/127182_english_hls_55841ta-di_h264/index.m3u8
+#EXTINF:-1 tvg-logo="https://www.fancode.com/skillup-uploads/cms-media/126923_5237_Ann-Li_Jessica-Pegula_fc-web.jpg" group-title="live",Ann Li vs Jessica Pegula
+https://sonypartnersdaimenew.akamaized.net/hls/live/2005445/DAI38PCC/master_mdh.m3u8?hdnea=exp=1748555955~acl=/*~id=77780112185735763710231568477220~hmac=0786adb130c50c0a15f6fdd627ec96d4c218bc7230015ddf0ec4416f8c77d1ca
+#EXTINF:-1 tvg-logo="https://www.fancode.com/skillup-uploads/cms-media/126920_5237_Hailey-Baptiste_Nao-Hibino_fc-web.jpg" group-title="live",Hailey Baptiste vs Nao Hibino
+https://dai.fancode.com/primary/126920_english_hls_30003ta-di_h264/index.m3u8
+#EXTINF:-1 tvg-logo="https://www.fancode.com/skillup-uploads/cms-media/127115_5237_Romboli-Smith_Tsitsipas-Tsitsipas_fc-web.jpg" group-title="live",Romboli/Smith vs Tsitsipas/Tsitsipas
+https://dai.fancode.com/primary/127115_english_hls_47966ta-di_h264/index.m3u8
+#EXTINF:-1 tvg-logo="https://www.fancode.com/skillup-uploads/cms-media/127108_5237_Behar-Vliegen_Nys-Roger-Vasselin_fc-web.jpg" group-title="live",Behar/Vliegen vs Nys/Roger-Vasselin
+https://dai.fancode.com/primary/127108_english_hls_88004ta-di_h264/index.m3u8
+#EXTINF:-1 tvg-logo="https://www.fancode.com/skillup-uploads/cms-media/127177_5237_Perez-Hunter_Muhammad-Schuurs_fc-web.jpg" group-title="live",Perez/Hunter vs Muhammad/Schuurs
+https://dai.fancode.com/primary/127177_english_hls_22159ta-di_h264/index.m3u8
+#EXTINF:-1 tvg-logo="https://www.fancode.com/skillup-uploads/cms-media/126811_5237_Alexander-Zverev_Jesper-De-Jong_fc-web.jpg" group-title="live",Alexander Zverev vs Jesper De Jong
+https://sonypartnersdaimenew.akamaized.net/hls/live/2022316/DAI12SMC/master_mdh.m3u8?hdnea=exp=1748558401~acl=/*~id=70501595918361481700430561206441~hmac=a0a88e3c1ecc51f242f51cec424f86204ab41f6089f5ecc75e1b7e4349b507a5
