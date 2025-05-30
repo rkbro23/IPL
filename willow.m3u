@@ -1,0 +1,8 @@
+#EXTM3U
+#EXTINF:-1 tvg-id="Willow.HD" tvg-logo="https://i.imgur.com/WillowLogo.png" group-title="Sports",Willow HD
+#KODIPROP:inputstreamaddon=inputstream.adaptive
+#KODIPROP:inputstream.adaptive.manifest_type=dash
+#KODIPROP:inputstream.adaptive.license_type=clearkey
+#KODIPROP:inputstream.adaptive.license_key=a6ec15283f93919e9f31db0c54e1fb73:8b1d7afdb86281f1469586d6ba2642e9
+#EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36
+https://ottb.live.cf.ww.aiv-cdn.net/lhr-nitro/live/clients/dash/enc/5maijv49yl/out/v1/95f4fbbc116b4febbb3e84dc3307e8c1/cenc.mpd
