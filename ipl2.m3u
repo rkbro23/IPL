@@ -13,7 +13,7 @@ http://hellosky.live:8080/live/HameedDubai/0507067610/239612.m3u8
 http://hellosky.live:8080/live/HameedDubai/0507067610/239599.m3u8
 
 #EXTINF:-1 tvg-id="star_sports_1_english_fhd" group-title="Star Sports|English|FHD",STAR SPORTS 1 ENG FHD
-http://hellosky.live:8080/live/HameedDubai/0507067610/239600.m3u8
+https://live07.hotstar.com/hls/live/2012616/inallow-bwf-2025/eng/1540043219/15mindvrm01fd809b8ca69f48e3a165bdf2491dd44931may2025/master_ap_1080_6.m3u8
 
 #EXTINF:-1 tvg-id="star_sports_1_english_4k" group-title="Star Sports|English|4K",STAR SPORTS 1 ENG 4K
 http://hellosky.live:8080/live/HameedDubai/0507067610/239601.m3u8
