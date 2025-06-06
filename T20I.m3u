@@ -16,4 +16,4 @@ https://dai.google.com/linear/hls/event/HynNobMPSu6nQCgpxsK0lQ/master.m3u8
 https://sonydaimenew.akamaized.net/hls/live/2037140/DAI20ME-V3/master_mdh.m3u8?hdnea=exp=1749273314~acl=/*~id=56452969191202961165641928093679~hmac=1ef2711d4e7d8471d008327fe5c8129a620416ea05a3739e615802218bcd0464
 
 #EXTINF:-1 tvg-logo="https://upload.wikimedia.org/wikipedia/commons/e/e5/TV_icon_2.svg",M3U PLAYLIST
-http://example.com/your-stream.m3u8
+https://m3uplaylist-plum.vercel.app/m3u_playlist.m3u8
